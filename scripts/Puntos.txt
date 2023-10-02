@@ -1,0 +1,15 @@
+limpiar pantalla
+incorporar ejercicio para impelemtar la estructura
+ubicarse en el directorio H
+crear 6 archivos:
+	2 deben ser txt
+copiar todos los archivos al directorio n (AB)
+copiar archivos con extension txt al directorio t
+escoger un archivo con una letra en su cuerta posición, copiar al directorio S
+al primer archivo para usuario activar ejecucion, para grupo lectura y para otros todos
+para el segundo archivo habilitar los permisos en usuario de escritura, para grupo negar todos los permisos y para otros habilitar permiso de ejecución en el segundo archivo, utilizando el modo octal
+
+
+2. escribir un codigo que retorne los primeros 50 numeros primos.
+
+3. codigo que debe indicar si un número es primo o no (recursiva)
