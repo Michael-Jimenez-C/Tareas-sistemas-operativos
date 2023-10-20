@@ -8,16 +8,19 @@ class Cajero:
         self.clientes.insert(-1,obj)
         return self.clientes
 
-    def atender(self) -> list:
+    def atender(self,return_numsol=False) -> list:
+        t=0
         if self.clientes[0] != self.clientes:
             cliente=self.clientes.pop(0)
             cliente['Solicitudes']=int(cliente['Solicitudes'])
             if cliente['Solicitudes']>5:
                 cliente['Solicitudes']-=5
+                t=5
                 self.append(cliente)
             else:
+                t=cliente['solicitudes']
                 del cliente
-        return self.clientes
+        return (self.clientes,t if return_numsol else self.clientes)
     
 if __name__=='__main__':#Esto solo se ejecuta si es la ejecucion principal
     cajero=Cajero()

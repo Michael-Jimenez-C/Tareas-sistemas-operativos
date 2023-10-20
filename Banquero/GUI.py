@@ -50,8 +50,8 @@ class GUI(tk.Frame):
         if self.cajero.clientes[0]==self.cajero.clientes:
             time.sleep(.1)
         else:
-            c=self.cajero.atender()
-            time.sleep(.2)
+            c,k=self.cajero.atender(True)
+            time.sleep(k/5)
             self.actualizartabla(c)
         self.master.after(1000, self.atender)
 
