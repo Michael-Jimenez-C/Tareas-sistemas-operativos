@@ -1,10 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 from Cajero import Cajero
-import time
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+
+from elementos.Tabla import Tabla
+
 
 class GUI(tk.Frame):
     def __init__(self, cajero, master=None) -> tk.Frame:
@@ -17,19 +19,23 @@ class GUI(tk.Frame):
         tk.Frame.__init__(self, master)
         self.cajero=cajero
         self.createWidgets()
+
+
+
         for i in range(15):
-            c=self.cajero.append({'Nombre': f"a{chr(i+96)}",'Solicitudes':np.random.randint(1,3)})
+            c=self.cajero.append({'Nombre': f"a{chr(i+96)}",'Solicitudes':np.random.randint(1,3),'Prioridad':np.random.randint(1,10)})
         self.actualizartabla(c,self.cajero.bloqueados)
         self.cajero.t+=1
         self.master.after(1000, self.ciclo)
 
     def createWidgets(self) -> None:
+
         self.master.geometry('1100x700')
         self.master.resizable(width=False , height=False)
         self.master.config(bg=self.colores['bg'])
         client=tk.Frame(self.master,width=260,height=120)
         client.place(x=20,y=20)
-        cuali=['Nombre','Solicitudes','prioridad']
+        cuali=['Nombre','Solicitudes','Prioridad']
         dif=90//len(cuali)
         
         cliente_form={}

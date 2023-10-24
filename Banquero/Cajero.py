@@ -17,7 +17,7 @@ class Cajero:
 
     def atender(self,c=False) -> list:
         #self.t+=1
-        a=noexpulsiva_con_bloqueo(self,c)
+        a=prioridad(self,c)
         return a
     
     def bloqu(self):
@@ -34,27 +34,3 @@ class Cajero:
             #tabla: proceso| tiempo de llegada | rafaga | t inicio | t final | t retorno | t espera
             tab.append([i,t0,len(t), (t[0] if len(t)>0 else 'None'), (t[-1] if len(t)>0 else 'None'), (t[-1]-t0 if len(t)>0 else 'None'),(t[-1]-len(t) if len(t)>0 else 'None')])
         return tab
-
-if __name__=='__main__':#Esto solo se ejecuta si es la ejecucion principal
-    cajero=Cajero()
-    cajero.append({"nombre":"a","solicitudes":20})
-    cajero.append({"nombre":"b","solicitudes":2})
-    cajero.append({"nombre":"c","solicitudes":4})
-    cajero.append({"nombre":"d","solicitudes":5})
-    cajero.append({"nombre":"e","solicitudes":7})
-    print(cajero.atender())
-    cajero.append({"nombre":"f","solicitudes":8})
-    cajero.append({"nombre":"g","solicitudes":10})
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())
-    print(cajero.atender())

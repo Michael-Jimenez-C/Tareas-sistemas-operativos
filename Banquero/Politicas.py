@@ -23,20 +23,6 @@ def noexpulsiva(self,c=False):
     if self.clientes[0]['Solicitudes']==0:
         cliente=self.clientes.pop(0)
     return self.clientes
-'''
-def noexpulsiva_con_bloqueo(self,c=False):
-    if self.clientes[0] != self.clientes:
-        cliente=self.clientes.pop(0)
-        cliente['Solicitudes']=int(cliente['Solicitudes'])
-        if np.random.rand()>.8:
-            cliente['Solicitudes']-=np.random.randint(0,cliente['Solicitudes']//2+1)
-            self.bloqueados.append(cliente)
-    if len(self.bloqueados)!=0:
-        if np.random.rand()>.8:
-            self.append(self.bloqueados.pop(0))
-
-    return self.clientes, cliente['Solicitudes']
-'''
 
 def noexpulsiva_con_bloqueo(self,c=False):
     if(np.random.rand()<.90):
@@ -49,7 +35,16 @@ def noexpulsiva_con_bloqueo(self,c=False):
         self.clientes.pop(0)
     return self.clientes
 
+def prioridad(self,c=False):
+    for i in range(len(self.clientes)-1):
+        for j in range(i+1,len(self.clientes)-1):
+            if int(self.clientes[i]['Prioridad'])>int(self.clientes[j]['Prioridad']):
+                temp=self.clientes[i]
+                self.clientes[i]=self.clientes[j]
+                self.clientes[j]=temp
+    return noexpulsiva_con_bloqueo(self,c)
 
+#####
 def procbloq(self):
     if len(self.bloqueados)>0:
         if (np.random.rand()>.85):
