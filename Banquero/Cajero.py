@@ -1,5 +1,5 @@
-from Politicas import *
-from Graficador import *
+from Politicas import procbloq,prioridad
+from Graficador import GANT
 class Cajero:
 
     def __init__(self) -> None:
@@ -31,6 +31,13 @@ class Cajero:
         for i in self.historico:
             t0=self.historico[i][0]
             t=self.historico[i][1:]
-            #tabla: proceso| tiempo de llegada | rafaga | t inicio | t final | t retorno | t espera
-            tab.append([i,t0,len(t), (t[0] if len(t)>0 else 'None'), (t[-1] if len(t)>0 else 'None'), (t[-1]-t0 if len(t)>0 else 'None'),(t[-1]-len(t) if len(t)>0 else 'None')])
+            
+            tab.append([i, #Proceso
+                        t0, #Tiempo de llegada
+                        len(t), #Rafaga
+                        (t[0]-1 if len(t)>0 else 'None'), #T inicio
+                        (t[-1] if len(t)>0 else 'None'), # T final
+                        (t[-1]-t0 if len(t)>0 else 'None'), #T retorno
+                        (t[-1]-len(t) if len(t)>0 else 'None') # T espera
+                        ])
         return tab

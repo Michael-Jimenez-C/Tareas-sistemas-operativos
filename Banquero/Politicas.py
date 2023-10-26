@@ -36,7 +36,7 @@ def noexpulsiva_con_bloqueo(self,c=False):
     return self.clientes
 
 def prioridad(self,c=False):
-    for i in range(len(self.clientes)-1):
+    for i in range(1,len(self.clientes)-1):
         for j in range(i+1,len(self.clientes)-1):
             if int(self.clientes[i]['Prioridad'])>int(self.clientes[j]['Prioridad']):
                 temp=self.clientes[i]
