@@ -6,7 +6,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
 from elementos.Tabla import Tabla
-
+from elementos.Tabla2 import Tabla2
 
 class GUI(tk.Frame):
     def __init__(self, cajero, master=None) -> tk.Frame:
@@ -23,7 +23,7 @@ class GUI(tk.Frame):
 
 
         for i in range(15):
-            c=self.cajero.append({'Nombre': f"a{chr(i+96)}",'Solicitudes':np.random.randint(1,15),'Prioridad':np.random.randint(1,10)})
+            c=self.cajero.append({'Nombre': f"a{chr(i+ord('a'))}",'Solicitudes':np.random.randint(1,10),'Prioridad':np.random.randint(1,10)})
         self.actualizartabla(c,self.cajero.bloqueados)
         self.cajero.t+=1
         self.master.after(1000, self.ciclo)
@@ -57,10 +57,11 @@ class GUI(tk.Frame):
         cab=""
         for i in 'P,TL,R,TC,TF,TR,TE'.split(','):
             cab+=i.ljust(15,' ')
-
-        ctabla3=Tabla(self.master,cab, 520,220,self.colores['c2'],self.colores['bg'])
-        ctabla3.place(x=20, y=380)
-        self.tabla3=ctabla3.getTab()
+        self.ctabla3=Tabla(self.master,cab, 520,220,self.colores['c2'],self.colores['bg'])
+        #self.ctabla3=Tabla2(self.master,cab, 520,220,self.colores['c2'],self.colores['bg'])
+        #self.ctabla3.setHeaders('P,TL,R,TC,TF,TR,TE'.split(','))
+        self.ctabla3.place(x=20, y=380)
+        self.tabla3=self.ctabla3.getTab()
 
         fig = Figure()
         self.canvas = FigureCanvasTkAgg(fig, master=self.master)
@@ -89,6 +90,7 @@ class GUI(tk.Frame):
         self.ctabla.actualizar(clientes[:-1],30)
         self.ctabla2.actualizar(bloqueados,30)
         V=self.cajero.GenTab()
+        #self.ctabla3.actualizar(V)
         self.tabla3.delete(0, tk.END)
         for i in V:
             cad=''

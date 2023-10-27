@@ -1,5 +1,5 @@
 import numpy as np
-
+from TablaProcesos import Tabla
 def expulsiva(self,c=False):
     if self.clientes[0] != self.clientes:
         cliente=self.clientes.pop(0)
@@ -7,7 +7,6 @@ def expulsiva(self,c=False):
         if cliente['Solicitudes']>5:
             cliente['Solicitudes']-=5
             self.append(cliente)
-        
     return self.clientes
 
 
@@ -19,17 +18,19 @@ def expulsiva(self,c=False):
 
 def noexpulsiva(self,c=False):    
     self.clientes[0]['Solicitudes']=int(self.clientes[0]['Solicitudes'])-1
-
     if self.clientes[0]['Solicitudes']==0:
-        cliente=self.clientes.pop(0)
+        self.clientes.pop(0)
     return self.clientes
 
 def noexpulsiva_con_bloqueo(self,c=False):
     if(np.random.rand()<.90):
+        Tabla.add(self)
         self.clientes[0]['Solicitudes']=int(self.clientes[0]['Solicitudes'])-1
         self.historico[self.clientes[0]['Nombre']].append(self.t)
     else:
         self.bloqueados.append(self.clientes.pop(0))
+        if len(Tabla.tabla[-1])==0:
+            Tabla.tabla.append([])
         return self.clientes
     if self.clientes[0]['Solicitudes']==0:
         self.clientes.pop(0)

@@ -1,14 +1,15 @@
-from Politicas import procbloq,prioridad
+from Politicas import noexpulsiva_con_bloqueo, procbloq,prioridad
 from Graficador import GANT
+from TablaProcesos import Tabla
 class Cajero:
-
     def __init__(self) -> None:
         self.clientes = []
         self.clientes.append(self.clientes)
         self.bloqueados = []
         self.t=0
         self.historico={}
-    
+        self.tabla=[]
+
     def append(self,obj:dict) -> list:
         self.clientes.insert(-1,obj)
         if obj['Nombre'] not in self.historico:
@@ -25,7 +26,7 @@ class Cajero:
     
     def diagram(self):
         return GANT(self.historico)
-    
+    '''
     def GenTab(self):
         tab=[]
         for i in self.historico:
@@ -41,3 +42,7 @@ class Cajero:
                         (t[-1]-len(t) if len(t)>0 else 'None') # T espera
                         ])
         return tab
+    '''
+    def GenTab(self):
+        return Tabla.get()
+        

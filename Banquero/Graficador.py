@@ -12,7 +12,7 @@ def GANT(historicos):
     for i,j in enumerate(Y):
         maximo=np.maximum(maximo,historicos[j][-1])
         ax.scatter(historicos[j][0],[-i],marker='>',color='gray')
-        ax.scatter(historicos[j][1:],[-i]*len(historicos[j][1:]))
+        ax.scatter(historicos[j][1:],[-i]*len(historicos[j][1:]),marker='s')
         ax.set_xticks(range(0,maximo+1,maximo//10+1))
     return fig,ax
 
