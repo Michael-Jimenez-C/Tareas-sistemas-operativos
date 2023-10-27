@@ -25,13 +25,12 @@ class Tabla2:
             self.tabla.column(i,width=20,anchor=tk.CENTER)
         
     def actualizar(self,datos):
-        
+        self.tabla.delete(*self.tabla.get_children())
         for i in datos:
-            print(i)
-            self.tabla.insert("",tk.END,values=i)
+            if i is not []:
+                self.tabla.insert("",tk.END,values=i)
     
-    def __convcad(self,lst,esp):
-        cad=''
-        for i in lst:
-            cad+=str(i).ljust(esp,' ')
-        return cad
+    def actualizar2(self,datos):
+        self.tabla.delete(*self.tabla.get_children())
+        for i in datos:
+            self.tabla.insert("",tk.END,values=(i['Nombre'],i['Solicitudes'],i['Prioridad']))

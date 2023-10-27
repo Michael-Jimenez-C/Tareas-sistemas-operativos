@@ -22,8 +22,8 @@ class GUI(tk.Frame):
 
 
 
-        for i in range(15):
-            c=self.cajero.append({'Nombre': f"a{chr(i+ord('a'))}",'Solicitudes':np.random.randint(1,10),'Prioridad':np.random.randint(1,10)})
+        for i in range(1):
+            c=self.cajero.append({'Nombre': f"a{chr(i+ord('a'))}",'Solicitudes':np.random.randint(14,15),'Prioridad':np.random.randint(1,10)})
         self.actualizartabla(c,self.cajero.bloqueados)
         self.cajero.t+=1
         self.master.after(1000, self.ciclo)
@@ -48,20 +48,17 @@ class GUI(tk.Frame):
         boton.place(x=0,y=90,width=260,height=30)
         
 
-        self.ctabla=Tabla(self.master,'Zona Critica', 260,210,self.colores['c2'],self.colores['bg'])
+        self.ctabla=Tabla2(self.master,'Zona Critica', 260,210,self.colores['c2'],self.colores['bg'])
+        self.ctabla.setHeaders('Nombre,Rafaga,Priodidad'.split(','))
         self.ctabla.place(x=20, y=160)
 
-        self.ctabla2=Tabla(self.master,'Bloqueados', 260,210,self.colores['c2'],self.colores['bg'])
+        self.ctabla2=Tabla2(self.master,'Bloqueados', 260,210,self.colores['c2'],self.colores['bg'])
+        self.ctabla2.setHeaders('Nombre,Rafaga,Priodidad'.split(','))
         self.ctabla2.place(x=290, y=160)
 
-        cab=""
-        for i in 'P,TL,R,TC,TF,TR,TE'.split(','):
-            cab+=i.ljust(15,' ')
-        self.ctabla3=Tabla(self.master,cab, 520,220,self.colores['c2'],self.colores['bg'])
-        #self.ctabla3=Tabla2(self.master,cab, 520,220,self.colores['c2'],self.colores['bg'])
-        #self.ctabla3.setHeaders('P,TL,R,TC,TF,TR,TE'.split(','))
+        self.ctabla3=Tabla2(self.master,'Tabla resumen', 520,220,self.colores['c2'],self.colores['bg'])
+        self.ctabla3.setHeaders('P,TL,R,TC,TF,TR,TE'.split(','))
         self.ctabla3.place(x=20, y=380)
-        self.tabla3=self.ctabla3.getTab()
 
         fig = Figure()
         self.canvas = FigureCanvasTkAgg(fig, master=self.master)
@@ -87,16 +84,10 @@ class GUI(tk.Frame):
         self.actualizartabla(c,self.cajero.bloqueados)
 
     def actualizartabla(self,clientes,bloqueados) -> None:  
-        self.ctabla.actualizar(clientes[:-1],30)
-        self.ctabla2.actualizar(bloqueados,30)
+        self.ctabla.actualizar2(clientes[:-1])
+        self.ctabla2.actualizar2(bloqueados)
         V=self.cajero.GenTab()
-        #self.ctabla3.actualizar(V)
-        self.tabla3.delete(0, tk.END)
-        for i in V:
-            cad=''
-            for j in i:
-                cad+=str(j).rjust(15,' ')
-            self.tabla3.insert(tk.END,cad)
+        self.ctabla3.actualizar(V)
     
     def actualizarFigura(self):
         fig,ax=self.cajero.diagram()

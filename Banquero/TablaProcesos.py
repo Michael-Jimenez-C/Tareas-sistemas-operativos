@@ -1,3 +1,4 @@
+import numpy as np
 class Tabla:
     tabla=[[]]
     global_const={}
@@ -17,7 +18,7 @@ class Tabla:
                         caj.t-1, #T inicio
                         caj.t, # T final
                         caj.t, #T retorno
-                        caj.t# T espera
+                        caj.t-1# T espera
                         ]
         elif (Tabla.tabla[-1][0]!=caj.clientes[0]['Nombre']):
             Tabla.tabla.append([])
@@ -25,6 +26,7 @@ class Tabla:
         else:
             index=caj.clientes[0]['Nombre']
             t=caj.historico[index][1:]
+            print(t,len(t))
             Tabla.tabla[-1][4]=caj.t
             Tabla.tabla[-1][5]=caj.t-Tabla.tabla[-1][1]
-            Tabla.tabla[-1][6]=Tabla.tabla[-1][5]-len(t)-1
+            Tabla.tabla[-1][6]=np.maximum(0,Tabla.tabla[-1][5]-len(t)-1)
