@@ -2,6 +2,10 @@ import numpy as np
 from TablaProcesos import Tabla
 
 prev_bloq=False
+probabilidad_bloqueo=0
+probabilidad_desbloqueo=0
+cuantum=4
+contador_cuantum=0
 
 def expulsiva(self,c=False):
     if self.clientes[0] != self.clientes:
@@ -27,12 +31,16 @@ def noexpulsiva(self,c=False):
 
 def noexpulsiva_con_bloqueo(self,c=False):
     global prev_bloq
-    if(np.random.rand()<.90):
+    global probabilidad_bloqueo
+    global contador_cuantum
+    if(np.random.rand()<(1-probabilidad_bloqueo)):
         Tabla.add(self)
         self.clientes[0]['Solicitudes']=int(self.clientes[0]['Solicitudes'])-1
         self.historico[self.clientes[0]['Nombre']].append(self.t)
         prev_bloq=False
+        contador_cuantum+=1
     else:
+        contador_cuantum=0
         self.bloqueados.append(self.clientes.pop(0))
         if len(Tabla.tabla[-1])!=0:
             Tabla.tabla.append([])
@@ -53,8 +61,27 @@ def prioridad(self,c=False):
                 self.clientes[j]=temp
     return noexpulsiva_con_bloqueo(self,c)
 
+def round_robins(self,c):
+    global cuantum
+    global contador_cuantum
+    if contador_cuantum>=cuantum:
+        contador_cuantum=0
+        client=self.clientes.pop(0)
+        self.append(client)
+    return noexpulsiva_con_bloqueo(self,c)
+
+def srtt(self,c):
+    for i in range(0,len(self.clientes)-1):
+        for j in range(i+1,len(self.clientes)-1):
+            if int(self.clientes[i]['Solicitudes'])<int(self.clientes[j]['Solicitudes']):
+                temp=self.clientes[i]
+                self.clientes[i]=self.clientes[j]
+                self.clientes[j]=temp
+    return noexpulsiva_con_bloqueo(self,c)
+
 #####
 def procbloq(self):
+    global probabilidad_desbloqueo
     if len(self.bloqueados)>0:
-        if (np.random.rand()>.85):
+        if (np.random.rand()<probabilidad_desbloqueo):
             self.append(self.bloqueados.pop(0))

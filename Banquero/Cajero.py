@@ -1,4 +1,4 @@
-from Politicas import noexpulsiva_con_bloqueo, procbloq,prioridad
+from Politicas import noexpulsiva_con_bloqueo, procbloq,prioridad, round_robins, srtt
 from Graficador import GANT
 from TablaProcesos import Tabla
 class Cajero:
@@ -18,7 +18,7 @@ class Cajero:
 
     def atender(self,c=False) -> list:
         #self.t+=1
-        a=prioridad(self,c)
+        a=round_robins(self,c)
         return a
     
     def bloqu(self):
