@@ -22,7 +22,7 @@ class GUI(tk.Frame):
 
 
 
-        for i in range(1):
+        for i in range(15):
             c=self.cajero.append({'Nombre': f"a{chr(i+ord('a'))}",'Solicitudes':np.random.randint(14,15),'Prioridad':np.random.randint(1,10)})
         self.actualizartabla(c,self.cajero.bloqueados)
         self.cajero.t+=1
