@@ -8,12 +8,14 @@ def GANT(historicos):
     ax.grid()
     ax.xaxis.tick_top()
     ax.set_yticks(-np.array(range(len(Y))),Y)
+    ax.set_xlim(xmin=-.5)
     maximo=0
     for i,j in enumerate(Y):
         maximo=np.maximum(maximo,historicos[j][-1])
         ax.scatter(historicos[j][0],[-i],marker='>',color='gray')
         ax.scatter([historicos[j][1:],np.array(historicos[j][1:])-1],[[-i]*len(historicos[j][1:]),[-i]*len(historicos[j][1:])],marker='s')
         ax.set_xticks(range(0,maximo+1,maximo//10+1))
+    ax.set_xlim(-.5,maximo+1)
     return fig,ax
 
 

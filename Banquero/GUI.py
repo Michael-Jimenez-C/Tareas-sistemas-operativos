@@ -30,7 +30,7 @@ class GUI(tk.Frame):
 
     def createWidgets(self) -> None:
 
-        self.master.geometry('1100x700')
+        self.master.geometry('1200x700')
         self.master.resizable(width=False , height=False)
         self.master.config(bg=self.colores['bg'])
 
@@ -57,16 +57,16 @@ class GUI(tk.Frame):
         self.ctabla2.place(x=290, y=160)
 
         self.ctabla3=Tabla2(self.master,'Tabla resumen', 520,220,self.colores['c2'],self.colores['bg'])
-        self.ctabla3.setHeaders('P,TL,R,TC,TF,TR,TE'.split(','))
+        self.ctabla3.setHeaders('P,TL,R,TC,TF,TR,TE,PR'.split(','))
         self.ctabla3.place(x=20, y=380)
 
         fig = Figure()
         self.canvas = FigureCanvasTkAgg(fig, master=self.master)
-        self.canvas.get_tk_widget().place(x=580,y=160,width=450,height=450)
+        self.canvas.get_tk_widget().place(x=580,y=160,width=550,height=450)
 
         
     def ciclo(self) -> None:
-        tiempo=250
+        tiempo=500
         if self.cajero.clientes[0]!=self.cajero.clientes:
             self.cajero.atender()
         self.cajero.bloqu()
@@ -92,6 +92,8 @@ class GUI(tk.Frame):
     def actualizarFigura(self):
         fig,ax=self.cajero.diagram()
         self.canvas.figure=fig
+        (ax.scatter([-1],[.5],color='green',label='Libre') if self.cajero.clientes[0] is self.cajero.clientes else ax.scatter([-1],[.5],color='red',label='En uso'))
+        ax.legend(loc='upper right', bbox_to_anchor=(1.1, 1.2))
         self.canvas.draw()
     
 if __name__ == '__main__':

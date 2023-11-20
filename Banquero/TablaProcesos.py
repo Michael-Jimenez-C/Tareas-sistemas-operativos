@@ -18,15 +18,14 @@ class Tabla:
                         caj.t-1, #T inicio
                         caj.t, # T final
                         caj.t, #T retorno
-                        caj.t-1# T espera
-                        ]
+                        caj.t-1,# T espera
+                        caj.clientes[0]['Prioridad']]
         elif (Tabla.tabla[-1][0]!=caj.clientes[0]['Nombre']):
             Tabla.tabla.append([])
             return Tabla.add(caj)
         else:
             index=caj.clientes[0]['Nombre']
             t=caj.historico[index][1:]
-            print(t,len(t))
             Tabla.tabla[-1][4]=caj.t
             Tabla.tabla[-1][5]=caj.t-Tabla.tabla[-1][1]
             Tabla.tabla[-1][6]=np.maximum(0,Tabla.tabla[-1][5]-len(t)-1)

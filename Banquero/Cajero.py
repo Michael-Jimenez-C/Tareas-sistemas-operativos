@@ -18,7 +18,7 @@ class Cajero:
 
     def atender(self,c=False) -> list:
         #self.t+=1
-        a=round_robins(self,c)
+        a=srtt(self,c)
         return a
     
     def bloqu(self):
