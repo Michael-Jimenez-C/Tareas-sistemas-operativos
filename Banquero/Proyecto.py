@@ -1,15 +1,12 @@
 import tkinter as tk
-from tkinter import ttk
-from Cajero import Cajero
-import numpy as np
+from Colas_prioridad import Cola_prioridad
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
-from elementos.Tabla import Tabla
 from elementos.Tabla2 import Tabla2
 
 class GUI(tk.Frame):
-    def __init__(self, cajero, master=None) -> tk.Frame:
+    def __init__(self, master=None) -> tk.Frame:
         self.colores={
             "bg": "#fff",
             "c1": "#b01e20",
@@ -17,8 +14,9 @@ class GUI(tk.Frame):
             "c3": "#dfa5a6"
             }
         tk.Frame.__init__(self, master)
-        self.cajero=cajero
+        self.colaP=Cola_prioridad()
         self.createWidgets()
+        self.master.after(1000, self.ciclo)
 
     def createWidgets(self) -> None:
 
@@ -62,8 +60,26 @@ class GUI(tk.Frame):
         fig = Figure(figsize=(3,3))
         self.canvas = FigureCanvasTkAgg(fig, master=self.master)
         self.canvas.get_tk_widget().place(x=430,y=190,width=690,height=430)
+    
+    def agregarCliente(self,cliente) -> None:
+        cliente_info={c: cliente[c].get() for c in cliente}
+        c=self.cajero.append(cliente_info)
+        self.actualizartabla(c,self.cajero.bloqueados)
+
+    def actualizartabla(self,clientes,bloqueados) -> None:  
+        pass
+    
+    def actualizarFigura(self):
+        pass
+
+    def ciclo(self) -> None:
+        self.colaP.atender()
+        self.colaP.bloqueados()
+        self.colaP.t+=1
+        self.master.after(500, self.ciclo)
+
 
 if __name__ == '__main__':
-    app = GUI(cajero=Cajero())
+    app = GUI()
     app.master.title('Cajero')
     app.mainloop()

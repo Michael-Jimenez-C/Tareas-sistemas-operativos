@@ -15,10 +15,10 @@ class Tabla:
             Tabla.tabla[-1]=[index, #Proceso
                         t0, #Tiempo de llegada
                         int(Tabla.global_const[index])-len(caj.historico[index][1:]), #Rafaga
-                        caj.t-1, #T inicio
-                        caj.t, # T final
-                        caj.t, #T retorno
-                        caj.t-1,# T espera
+                        caj.t.t-1, #T inicio
+                        caj.t.t, # T final
+                        caj.t.t, #T retorno
+                        caj.t.t,# T espera
                         caj.clientes[0]['Prioridad']]
         elif (Tabla.tabla[-1][0]!=caj.clientes[0]['Nombre']):
             Tabla.tabla.append([])
@@ -26,6 +26,6 @@ class Tabla:
         else:
             index=caj.clientes[0]['Nombre']
             t=caj.historico[index][1:]
-            Tabla.tabla[-1][4]=caj.t
-            Tabla.tabla[-1][5]=caj.t-Tabla.tabla[-1][1]
+            Tabla.tabla[-1][4]=caj.t.t
+            Tabla.tabla[-1][5]=caj.t.t-Tabla.tabla[-1][1]
             Tabla.tabla[-1][6]=np.maximum(0,Tabla.tabla[-1][5]-len(t)-1)
