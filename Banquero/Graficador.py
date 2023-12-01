@@ -3,7 +3,7 @@ import numpy as np
 
 def GANT(historicos):
     Y=[i for i in historicos]
-    fig = plt.Figure(figsize=(5, 4), dpi=100)
+    fig = plt.Figure(figsize=(6, 4), dpi=100)
     ax = fig.add_subplot(111)
     ax.grid()
     ax.xaxis.tick_top()

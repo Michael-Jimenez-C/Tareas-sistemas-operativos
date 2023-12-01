@@ -2,8 +2,11 @@ import tkinter as tk
 from Colas_prioridad import Cola_prioridad
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-
 from elementos.Tabla2 import Tabla2
+from Politicas import bloqueados_t
+from Contador import Contador
+import numpy as np
+import time
 
 class GUI(tk.Frame):
     def __init__(self, master=None) -> tk.Frame:
@@ -16,6 +19,12 @@ class GUI(tk.Frame):
         tk.Frame.__init__(self, master)
         self.colaP=Cola_prioridad()
         self.createWidgets()
+
+        for i in range(10):
+            self.colaP.append({'Nombre': f"a{chr(i+ord('a'))}",'Solicitudes':np.random.randint(2,9),'Prioridad':np.random.randint(1,10), 'Lista':np.random.randint(1,4)})
+        self.actualizartabla()
+        Contador.get().next()
+
         self.master.after(1000, self.ciclo)
 
     def createWidgets(self) -> None:
@@ -26,7 +35,7 @@ class GUI(tk.Frame):
         
         client=tk.Frame(self.master,width=260,height=150)
         client.place(x=20,y=20)
-        cuali=['Nombre','Rafaga','Prioridad','Lista']
+        cuali=['Nombre','Solicitudes','Prioridad','Lista']
         dif=120//len(cuali)
         cliente_form={}
         for j,i in enumerate(cuali):
@@ -63,23 +72,44 @@ class GUI(tk.Frame):
     
     def agregarCliente(self,cliente) -> None:
         cliente_info={c: cliente[c].get() for c in cliente}
-        c=self.cajero.append(cliente_info)
-        self.actualizartabla(c,self.cajero.bloqueados)
+        self.colaP.append(cliente_info)
+        self.actualizartabla()
 
-    def actualizartabla(self,clientes,bloqueados) -> None:  
-        pass
+    def actualizartabla(self) -> None:  
+        self.ctabla1.actualizar2(self.colaP.colas[1].clientes[:-1])
+        self.ctabla2.actualizar2(self.colaP.colas[2].clientes[:-1])
+        self.ctabla3.actualizar2(self.colaP.colas[3].clientes[:-1])
+        self.bloqueados.actualizar2(bloqueados_t)
+        V=self.colaP.colas[1].GenTab()
+        self.procesos.actualizar(V)
     
-    def actualizarFigura(self):
-        pass
+    def actualizarFigura(self,libre=False):
+        fig,ax=self.colaP.colas[1].diagram()
+        self.canvas.figure=fig
+        ax.scatter([-1],[.5],label=f'$t={Contador.get().t-1}$', marker='')
+        (ax.scatter([-1],[.5],color='green',label='Libre') if libre else ax.scatter([-1],[.5],color='red',label='En uso'))
+        ax.legend(loc='upper right', bbox_to_anchor=(1.1, 1.2))
+        self.canvas.draw()
 
     def ciclo(self) -> None:
+        proceso_actual=self.colaP.proceso_actual()
         self.colaP.atender()
         self.colaP.bloqueados()
+        proceso_siguiente=self.colaP.proceso_actual()
         self.colaP.t+=1
-        self.master.after(500, self.ciclo)
+        self.actualizartabla()
+        print(proceso_actual,proceso_siguiente)
+        if proceso_actual!= proceso_siguiente:
+            self.actualizarFigura(True)
+            self.master.after(1000, self.actab)
+        else:
+            self.actab()
 
+    def actab(self):
+        self.actualizarFigura()
+        self.master.after(500, self.ciclo)
 
 if __name__ == '__main__':
     app = GUI()
-    app.master.title('Cajero')
+    app.master.title('Proyecto - sistemas operativos')
     app.mainloop()

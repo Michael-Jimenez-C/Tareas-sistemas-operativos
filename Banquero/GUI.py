@@ -4,8 +4,6 @@ from Cajero import Cajero
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-
-from elementos.Tabla import Tabla
 from elementos.Tabla2 import Tabla2
 
 class GUI(tk.Frame):

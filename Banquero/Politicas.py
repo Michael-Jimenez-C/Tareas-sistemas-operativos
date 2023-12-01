@@ -1,9 +1,9 @@
 import numpy as np
 from TablaProcesos import Tabla
-
+from Contador import Contador
 prev_bloq=False
-probabilidad_bloqueo=0
-probabilidad_desbloqueo=0
+probabilidad_bloqueo=.10
+probabilidad_desbloqueo=.50
 cuantum=4
 contador_cuantum=0
 prev_process=None
@@ -54,7 +54,7 @@ def noexpulsiva_con_bloqueo(self,c=False):
         if len(Tabla.tabla[-1])!=0:
             Tabla.tabla.append([])
         if not prev_bloq:
-            self.t-=1
+            Contador.get().back()
             prev_bloq=True
         return self.clientes
     if self.clientes[0]['Solicitudes']==0:
@@ -104,4 +104,4 @@ def global_desbloq(self):#este self es una cola
     global probabilidad_desbloqueo
     if len(bloqueados_t)>0:
         if (np.random.rand()<probabilidad_desbloqueo):
-            self.append(self.bloqueados.pop(0))
+            self.append(bloqueados_t.pop(0))

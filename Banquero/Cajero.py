@@ -2,7 +2,7 @@ from Politicas import noexpulsiva_con_bloqueo, procbloq,prioridad, round_robins,
 from Graficador import GANT
 from TablaProcesos import Tabla
 from Contador import Contador
-
+from Historico import Historico
 
 algoritmos={None:srtt,
             'srtt': srtt,
@@ -15,7 +15,7 @@ class Cajero:
         self.clientes.append(self.clientes)
         self.bloqueados = []
         self.t=Contador.get()
-        self.historico={}
+        self.historico=Historico.get()
         self.tabla=[]
         self.politica=politica
 

@@ -33,4 +33,4 @@ class Tabla2:
     def actualizar2(self,datos):
         self.tabla.delete(*self.tabla.get_children())
         for i in datos:
-            self.tabla.insert("",tk.END,values=(i['Nombre'],i['Solicitudes'],i['Prioridad']))
+            self.tabla.insert("",tk.END,values=(i['Nombre'],i['Solicitudes'],i['Prioridad'],i['Lista']))

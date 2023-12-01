@@ -12,7 +12,7 @@ class Cola_prioridad:
     def append(self, obj:dict) -> None:
         if int(obj['Lista']) not in self.colas:
             obj['Lista']=3
-        self.colas[obj['Lista']].append(obj)
+        self.colas[int(obj['Lista'])].append(obj)
     
     def atender(self) ->None:
         for i in self.colas:
@@ -22,3 +22,9 @@ class Cola_prioridad:
     
     def bloqueados(self) -> None:
         global_desbloq(self)
+    
+    def proceso_actual(self) -> str:
+        for i in self.colas:
+            if len(self.colas[i].clientes)>1:
+                return self.colas[i].clientes[0]['Nombre']
+        return None
