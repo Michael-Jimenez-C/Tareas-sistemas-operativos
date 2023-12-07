@@ -29,3 +29,6 @@ class Tabla:
             Tabla.tabla[-1][4]=caj.t.t
             Tabla.tabla[-1][5]=caj.t.t-Tabla.tabla[-1][1]
             Tabla.tabla[-1][6]=np.maximum(0,Tabla.tabla[-1][5]-len(t)-1)
+    def count(index):
+        a,b=np.unique(np.array(Tabla.tabla)[0,:],return_counts=True)
+        return b[a==index]

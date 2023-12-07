@@ -9,6 +9,7 @@ import numpy as np
 import time
 
 class GUI(tk.Frame):
+    cola=None
     def __init__(self, master=None) -> tk.Frame:
         self.colores={
             "bg": "#fff",
@@ -28,7 +29,7 @@ class GUI(tk.Frame):
         self.master.after(1000, self.ciclo)
 
     def createWidgets(self) -> None:
-
+        GUI.cola=self.colaP
         self.master.geometry('1140x660')
         self.master.resizable(width=False , height=False)
         self.master.config(bg=self.colores['bg'])
@@ -47,19 +48,19 @@ class GUI(tk.Frame):
 
 
         self.ctabla1=Tabla2(self.master,'ROUND ROBINS (1)', 260,150,self.colores['c2'],self.colores['bg'])
-        self.ctabla1.setHeaders('Nombre,Rafaga,Priodidad,Lista'.split(','))
+        self.ctabla1.setHeaders('Nombre,Rafaga,Priodidad'.split(','))
         self.ctabla1.place(x=320, y=20)
 
         self.ctabla2=Tabla2(self.master,'SRTT (2)', 260,150,self.colores['c2'],self.colores['bg'])
-        self.ctabla2.setHeaders('Nombre,Rafaga,Priodidad,Lista'.split(','))
+        self.ctabla2.setHeaders('Nombre,Rafaga,Priodidad'.split(','))
         self.ctabla2.place(x=590, y=20)
 
         self.ctabla3=Tabla2(self.master,'PRIORIDAD (3)', 260,150,self.colores['c2'],self.colores['bg'])
-        self.ctabla3.setHeaders('Nombre,Rafaga,Priodidad,Lista'.split(','))
+        self.ctabla3.setHeaders('Nombre,Rafaga,Priodidad'.split(','))
         self.ctabla3.place(x=860, y=20)
 
         self.bloqueados=Tabla2(self.master,'BLOQUEADOS', 380,200,self.colores['c2'],self.colores['bg'])
-        self.bloqueados.setHeaders('Nombre,Rafaga,Priodidad,Lista'.split(','))
+        self.bloqueados.setHeaders('Nombre,Rafaga,Priodidad'.split(','))
         self.bloqueados.place(x=20, y=190)
 
         self.procesos=Tabla2(self.master,'PROCESOS', 380,200,self.colores['c2'],self.colores['bg'])

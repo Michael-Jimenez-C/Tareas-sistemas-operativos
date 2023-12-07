@@ -7,7 +7,7 @@ probabilidad_desbloqueo=.50
 cuantum=4
 contador_cuantum=0
 prev_process=None
-
+vejez=4
 bloqueados_t=[]
 
 def expulsiva(self,c=False):
@@ -38,6 +38,7 @@ def noexpulsiva_con_bloqueo(self,c=False):
     global contador_cuantum
     global prev_process
     global bloqueados_t
+    global vejez
     if prev_process!=self.clientes[0]['Nombre']:
         prev_process=self.clientes[0]['Nombre']
         contador_cuantum=0
@@ -45,6 +46,10 @@ def noexpulsiva_con_bloqueo(self,c=False):
         Tabla.add(self)
         self.clientes[0]['Solicitudes']=int(self.clientes[0]['Solicitudes'])-1
         self.historico[self.clientes[0]['Nombre']].append(self.t.t)
+        if 'ol' in self.clientes[0]:
+            self.clientes[0]['ol']=self.clientes[0]['Lista']
+        if len(self.historico[self.clientes[0]['Nombre']])%vejez==0:
+            self.clientes[0]['Lista']=int(self.clientes[0]['Lista'])-1 if int(self.clientes[0]['Lista'])>1 else int(self.clientes[0]['Lista'])
         prev_bloq=False
         contador_cuantum+=1
     else:
@@ -69,6 +74,7 @@ def prioridad(self,c=False):
                 temp=self.clientes[i]
                 self.clientes[i]=self.clientes[j]
                 self.clientes[j]=temp
+                
     return noexpulsiva_con_bloqueo(self,c)
 
 def round_robins(self,c):
@@ -102,6 +108,7 @@ def procbloq(self):
 def global_desbloq(self):#este self es una cola
     global bloqueados_t
     global probabilidad_desbloqueo
+    global vejez
     if len(bloqueados_t)>0:
         if (np.random.rand()<probabilidad_desbloqueo):
             self.append(bloqueados_t.pop(0))
